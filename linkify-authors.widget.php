@@ -7,7 +7,7 @@
 /*
  * Linkify Authors plugin widget code
  *
- * Copyright (c) 2011 by Scott Reilly (aka coffee2code)
+ * Copyright (c) 2011-2012 by Scott Reilly (aka coffee2code)
  *
  */
 
@@ -175,4 +175,3 @@ class c2c_LinkifyAuthorsWidget extends WP_Widget {
 add_action( 'widgets_init', create_function('', 'register_widget(\'c2c_LinkifyAuthorsWidget\');') );
 
 endif; // end if !class_exists()
-?>
