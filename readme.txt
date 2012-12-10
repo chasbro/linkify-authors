@@ -2,10 +2,12 @@
 Contributors: coffee2code
 Donate link: http://coffee2code.com/donate
 Tags: authors, link, linkify, archives, list, widget, template tag, coffee2code
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 2.8
-Tested up to: 3.1
-Stable tag: 2.0
-Version: 2.0
+Tested up to: 3.5
+Stable tag: 2.0.4
+Version: 2.0.4
 
 Turn a string, list, or array of author IDs and/or slugs into a list of links to those authors.
 
@@ -16,7 +18,7 @@ Turn a string, list, or array of author IDs and/or slugs into a list of links to
 
 The plugin provides a widget called "Linkify Authors" as well as a template tag, `c2c_linkify_authors()`, to easily indicate authors to list and how to list them.  Authors are specified by either ID or slug.  See other parts of the documentation for example usage and capabilities.
 
-Links: [Plugin Homepage]:(http://coffee2code.com/wp-plugins/linkify-authors/) | [Author Homepage]:(http://coffee2code.com)
+Links: [Plugin Homepage](http://coffee2code.com/wp-plugins/linkify-authors/) | [Plugin Directory Page](http://wordpress.org/extend/plugins/linkify-authors/) | [Author Homepage](http://coffee2code.com)
 
 
 == Installation ==
@@ -151,6 +153,29 @@ Do:
 
 == Changelog ==
 
+= 2.0.4 =
+* Add check to prevent execution of code if file is directly accessed
+* Note compatibility through WP 3.5+
+* Update copyright date (2013)
+* Create repo's WP.org assets directory
+* Move screenshot into repo's assets directory
+
+= 2.0.3 =
+* Re-license as GPLv2 or later (from X11)
+* Add 'License' and 'License URI' header tags to readme.txt and plugin file
+* Remove ending PHP close tag
+* Note compatibility through WP 3.4+
+
+= 2.0.2 =
+* Note compatibility through WP 3.3+
+* Add link to plugin directory page to readme.txt
+* Update copyright date (2012)
+
+= 2.0.1 =
+* Note compatibility through WP 3.2+
+* Minor code formatting changes (spacing)
+* Fix plugin homepage and author links in description in readme.txt
+
 = 2.0 =
 * Add Linkify Authors widget
 * Rename `linkify_authors()` to `c2c_linkify_authors()` (but maintain a deprecated version for backwards compatibility)
@@ -187,6 +212,18 @@ Do:
 
 
 == Upgrade Notice ==
+
+= 2.0.4 =
+Trivial update: noted compatibility through WP 3.5+
+
+= 2.0.3 =
+Trivial update: noted compatibility through WP 3.4+; explicitly stated license
+
+= 2.0.2 =
+Trivial update: noted compatibility through WP 3.3+ and minor readme.txt tweaks
+
+= 2.0.1 =
+Trivial update: noted compatibility through WP 3.2+ and minor code formatting changes (spacing)
 
 = 2.0 =
 Feature update: added widget, deprecated `linkify_authors()` in favor of `c2c_linkify_authors()`, renamed action from 'linkify_authors' to 'c2c_linkify_authors', noted compatibility with WP 3.1+, added Template Tags and FAQ sections to readme, and updated copyright date (2011).
