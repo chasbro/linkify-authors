@@ -158,6 +158,7 @@ Do:
 * If a slug search for a user by login fails, try by nicename
 * Discontinue use of deprecated `get_userdatabylogin()` and use `get_user_by()` instead
 * Validate author is either int or string before handling
+* Add unit tests
 * Minor code tweaks (spacing, bracing)
 * Minor documentation tweaks
 * Note compatibility through WP 3.8+
