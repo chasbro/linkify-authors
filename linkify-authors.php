@@ -2,43 +2,49 @@
 /**
  * @package Linkify_Authors
  * @author Scott Reilly
- * @version 2.0
+ * @version 2.1
  */
 /*
 Plugin Name: Linkify Authors
-Version: 2.0
+Version: 2.1
 Plugin URI: http://coffee2code.com/wp-plugins/linkify-authors/
 Author: Scott Reilly
-Author URI: http://coffee2code.com
+Author URI: http://coffee2code.com/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Description: Turn a string, list, or array of author IDs and/or slugs into a list of links to those authors.
 
-Compatible with WordPress 2.8+, 2.9+, 3.0+, 3.1+.
+Compatible with WordPress 3.3 through 3.8+.
 
 =>> Read the accompanying readme.txt file for instructions and documentation.
 =>> Also, visit the plugin's homepage for additional information and updates.
-=>> Or visit: http://wordpress.org/extend/plugins/linkify-authors/
+=>> Or visit: http://wordpress.org/plugins/linkify-authors/
 
 */
 
 /*
-Copyright (c) 2009-2011 by Scott Reilly (aka coffee2code)
+	Copyright (c) 2009-2014 by Scott Reilly (aka coffee2code)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following conditions:
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
-IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+defined( 'ABSPATH' ) or die();
 
 require_once( dirname( __FILE__ ) . '/linkify-authors.widget.php' );
 
-if ( !function_exists( 'c2c_linkify_authors' ) ) :
+if ( ! function_exists( 'c2c_linkify_authors' ) ) :
 /**
  * Displays links to each of any number of authors specified via author IDs/slugs
  *
@@ -53,10 +59,11 @@ if ( !function_exists( 'c2c_linkify_authors' ) ) :
  * @return none (Text is echoed; nothing is returned)
  */
 function c2c_linkify_authors( $authors, $before = '', $after = '', $between = ', ', $before_last = '', $none = '' ) {
-	if ( empty( $authors ) )
+	if ( empty( $authors ) ) {
 		$authors = array();
-	elseif ( !is_array( $authors ) )
+	} elseif ( ! is_array( $authors ) ) {
 		$authors = explode( ',', str_replace( array( ', ', ' ', ',' ), ',', $authors ) );
+	}
 
 	if ( empty( $authors ) ) {
 		$response = '';
@@ -64,20 +71,30 @@ function c2c_linkify_authors( $authors, $before = '', $after = '', $between = ',
 		$links = array();
 		foreach ( $authors as $id ) {
 			if ( 0 == (int) $id ) {
-				$author = get_userdatabylogin( $id );
-				if ( $author )
+				if ( ! is_string( $id ) ) {
+					continue;
+				}
+				$author = get_user_by( 'login', $id );
+				if ( ! $author ) {
+					$author = get_user_by( 'slug', $id );
+				}
+				if ( $author ) {
 					$id = $author->ID;
+				}
 			}
-			if ( !$id )
+			if ( ! $id ) {
 				continue;
+			}
 			$title = get_the_author_meta( 'display_name', $id );
-			if ( $title )
+
+			if ( $title ) {
 				$links[] = sprintf(
 					'<a href="%1$s" title="%2$s">%3$s</a>',
 					get_author_posts_url( $id ),
 					esc_attr( sprintf( __( 'Posts by %s' ), $title ) ),
 					$title
 				);
+			}
 		}
 		if ( empty( $before_last ) ) {
 			$response = implode( $between, $links );
@@ -90,13 +107,15 @@ function c2c_linkify_authors( $authors, $before = '', $after = '', $between = ',
 					$response = $links[0] . $before_last . $links[1];
 					break;
 				default:
-					$response = implode( $between, array_slice( $links, 0, $size-1 ) ) . $before_last . $links[$size-1];
+					$response = implode( $between, array_slice( $links, 0, $size-1 ) ) . $before_last . $links[ $size-1 ];
 			}
 		}
 	}
+
 	if ( empty( $response ) ) {
-		if ( empty( $none ) )
+		if ( empty( $none ) ) {
 			return;
+		}
 		$response = $none;
 	}
 	echo $before . $response . $after;
@@ -104,7 +123,7 @@ function c2c_linkify_authors( $authors, $before = '', $after = '', $between = ',
 add_action( 'c2c_linkify_authors', 'c2c_linkify_authors', 10, 6 );
 endif;
 
-if ( !function_exists( 'linkify_authors' ) ) :
+if ( ! function_exists( 'linkify_authors' ) ) :
 /**
  * Displays links to each of any number of authors specified via author IDs/slugs
  *
@@ -117,4 +136,3 @@ function linkify_authors( $authors, $before = '', $after = '', $between = ', ', 
 }
 add_action( 'linkify_authors', 'linkify_authors', 10, 6 ); // Deprecated
 endif;
-?>

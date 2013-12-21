@@ -2,16 +2,18 @@
 /**
  * @package Linkify_Authors_Widget
  * @author Scott Reilly
- * @version 001
+ * @version 002
  */
 /*
  * Linkify Authors plugin widget code
  *
- * Copyright (c) 2011 by Scott Reilly (aka coffee2code)
+ * Copyright (c) 2011-2014 by Scott Reilly (aka coffee2code)
  *
  */
 
-if ( class_exists( 'WP_Widget' ) && !class_exists( 'c2c_LinkifyAuthorsWidget' ) ) :
+defined( 'ABSPATH' ) or die();
+
+if ( class_exists( 'WP_Widget' ) && ! class_exists( 'c2c_LinkifyAuthorsWidget' ) ) :
 
 class c2c_LinkifyAuthorsWidget extends WP_Widget {
 	private $widget_id = 'linkify_authors';
@@ -175,4 +177,3 @@ class c2c_LinkifyAuthorsWidget extends WP_Widget {
 add_action( 'widgets_init', create_function('', 'register_widget(\'c2c_LinkifyAuthorsWidget\');') );
 
 endif; // end if !class_exists()
-?>
